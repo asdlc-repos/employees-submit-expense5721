@@ -8,9 +8,10 @@ claim is edited and resubmitted by the same employee; and finance exports
 approved, unexported claims to a CSV file for payroll. The portal and its API
 sign users in through Thunder, resolve the caller's role from their group
 membership, and scope every view to that role. Receipts are optional
-image/file attachments stored in object storage; the API's own database holds
-claims and the lightweight employee/manager directory this project needs (no
-existing organization directory service is registered to consume instead).
+image/file attachments stored inline on the claim record itself, in the API's
+own database, which also holds the lightweight employee/manager directory
+this project needs (no existing organization directory service is registered
+to consume instead).
 
 ## Context (C1)
 
@@ -22,7 +23,6 @@ graph TD
   Portal[Expense Claims Portal]
   API[Expense Claims API]
   Thunder[Thunder Auth]
-  Storage[Receipt Storage - S3]
 
   Employee --> Portal
   Manager --> Portal
@@ -30,7 +30,6 @@ graph TD
   Portal --> API
   Portal --> Thunder
   API --> Thunder
-  API --> Storage
 ```
 
 ## Domain model (ER)
@@ -57,7 +56,8 @@ erDiagram
     string expenseDate
     string description
     string status
-    string receiptKey
+    string receiptContentType
+    string receiptData
     string managerComment
     string createdAt
     string updatedAt
@@ -65,10 +65,11 @@ erDiagram
   }
 ```
 
-`status` is one of `pending`, `approved`, `rejected`. `receiptKey` is the S3
-object key for the optional receipt and is nullable. `exportedAt` is null
-until finance exports the claim, and export only ever includes `approved`
-claims with `exportedAt` still null.
+`status` is one of `pending`, `approved`, `rejected`. `receiptData` is the
+optional receipt file, stored inline as base64 content alongside
+`receiptContentType`; both are nullable. `exportedAt` is null until finance
+exports the claim, and export only ever includes `approved` claims with
+`exportedAt` still null.
 
 ## Key flows
 
@@ -79,16 +80,12 @@ sequenceDiagram
   participant E as Employee
   participant W as Portal
   participant A as API
-  participant S as Receipt Storage
 
   E->>W: Fill claim form (amount, category, date, description)
   opt Attach receipt
-    W->>A: Request presigned upload URL
-    A->>S: Generate presigned PUT URL
-    A-->>W: Presigned URL
-    W->>S: Upload receipt directly
+    W->>W: Encode receipt file as base64
   end
-  W->>A: POST /expense-claims
+  W->>A: POST /expense-claims (with receipt content, if any)
   A-->>W: Claim created (status: pending)
 ```
 

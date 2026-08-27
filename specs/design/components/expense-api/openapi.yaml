@@ -45,7 +45,7 @@ paths:
                   previous: { type: string, nullable: true, description: relative URI of the previous page }
                   data:
                     type: array
-                    items: { $ref: '#/components/schemas/ExpenseClaim' }
+                    items: { $ref: '#/components/schemas/ExpenseClaimSummary' }
         '401':
           description: caller is not signed in
           content:
@@ -84,7 +84,7 @@ paths:
       - $ref: '#/components/parameters/UserGroups'
     get:
       operationId: getExpenseClaim
-      summary: Get one expense claim
+      summary: Get one expense claim, including its receipt content if any
       tags: [expense-claims]
       responses:
         '200':
@@ -202,75 +202,6 @@ paths:
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
-  /expense-claims/{claimId}/receipt-upload-url:
-    parameters:
-      - $ref: '#/components/parameters/ClaimId'
-      - $ref: '#/components/parameters/UserId'
-      - $ref: '#/components/parameters/UserName'
-    post:
-      operationId: createReceiptUploadUrl
-      summary: Get a presigned URL to upload this claim's receipt
-      tags: [expense-claims]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required: [contentType]
-              properties:
-                contentType: { type: string, description: MIME type of the receipt file }
-      responses:
-        '200':
-          description: presigned upload URL
-          content:
-            application/json:
-              schema:
-                type: object
-                required: [uploadUrl, receiptKey]
-                properties:
-                  uploadUrl: { type: string, description: presigned S3 PUT URL }
-                  receiptKey: { type: string, description: object key to attach to the claim }
-        '403':
-          description: caller does not own this claim
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/Error' }
-        '404':
-          description: claim not found
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/Error' }
-  /expense-claims/{claimId}/receipt-download-url:
-    parameters:
-      - $ref: '#/components/parameters/ClaimId'
-      - $ref: '#/components/parameters/UserId'
-      - $ref: '#/components/parameters/UserName'
-      - $ref: '#/components/parameters/UserGroups'
-    get:
-      operationId: getReceiptDownloadUrl
-      summary: Get a presigned URL to view this claim's receipt
-      tags: [expense-claims]
-      responses:
-        '200':
-          description: presigned download URL
-          content:
-            application/json:
-              schema:
-                type: object
-                required: [downloadUrl]
-                properties:
-                  downloadUrl: { type: string, description: presigned S3 GET URL }
-        '403':
-          description: caller may not view this claim's receipt
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/Error' }
-        '404':
-          description: claim or receipt not found
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/Error' }
   /expense-claims/export:
     parameters:
       - $ref: '#/components/parameters/UserId'
@@ -360,14 +291,15 @@ components:
         category: { $ref: '#/components/schemas/ClaimCategory' }
         expenseDate: { type: string, format: date }
         description: { type: string }
-        receiptKey: { type: string, nullable: true }
+        receiptContentType: { type: string, nullable: true, description: MIME type of the attached receipt, if any }
+        receiptData: { type: string, format: byte, nullable: true, description: base64-encoded receipt file content, if any }
     DecisionInput:
       type: object
       properties:
         comment: { type: string, description: optional manager comment }
-    ExpenseClaim:
+    ExpenseClaimSummary:
       type: object
-      required: [id, employeeId, amount, currency, category, expenseDate, description, status, createdAt, updatedAt]
+      required: [id, employeeId, amount, currency, category, expenseDate, description, status, hasReceipt, createdAt, updatedAt]
       properties:
         id: { type: string }
         employeeId: { type: string }
@@ -377,11 +309,18 @@ components:
         expenseDate: { type: string, format: date }
         description: { type: string }
         status: { $ref: '#/components/schemas/ClaimStatus' }
-        receiptKey: { type: string, nullable: true }
+        hasReceipt: { type: boolean, description: whether a receipt is attached, without including its content }
         managerComment: { type: string, nullable: true }
         createdAt: { type: string, format: date-time }
         updatedAt: { type: string, format: date-time }
         exportedAt: { type: string, format: date-time, nullable: true }
+    ExpenseClaim:
+      allOf:
+        - $ref: '#/components/schemas/ExpenseClaimSummary'
+        - type: object
+          properties:
+            receiptContentType: { type: string, nullable: true }
+            receiptData: { type: string, format: byte, nullable: true, description: base64-encoded receipt file content, if any }
     Error:
       type: object
       required: [code, message]
