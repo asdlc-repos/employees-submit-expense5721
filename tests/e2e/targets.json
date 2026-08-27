@@ -1,0 +1,7 @@
+{
+  "targets": {
+    "expense-api": "http://development-default.openchoreoapis.localhost:19080/employees-submit-expense5721-expense-api-http",
+    "expense-webapp": "http://http-employees-sub-development-default-320cd599.openchoreoapis.localhost:19080/"
+  },
+  "primary": "expense-webapp"
+}
