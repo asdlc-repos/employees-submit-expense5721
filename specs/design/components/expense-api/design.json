@@ -7,21 +7,58 @@
   "appPath": "expense-api",
   "entrypoint": "deployment/service",
   "exposure": "intranet",
+  "stories": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "description": "Owns expense claims and their approval lifecycle: creation, editing of rejected claims, manager approve/reject, and finance export to a payroll CSV. Also owns the minimal employee/manager directory needed to route a claim to its submitter's manager. The optional receipt attachment is stored inline as base64 content on the claim record in this service's own database — no separate object storage dependency. Does not send email and does not integrate with a specific payroll vendor API.",
   "dependencies": [
     {
       "kind": "platform-resource",
       "name": "expense-db",
+      "description": "Stores expense claims (including the receipt file content), their status history, and the lightweight employee/manager directory this project owns (no org directory service is registered).",
       "resourceType": "postgres-cnpg",
-      "description": "Stores expense claims (including the receipt file content), their status history, and the lightweight employee/manager directory this project owns (no org directory service is registered)."
+      "wiring": {
+        "ref": "employees-submit-d21d2a05",
+        "envBindings": {
+          "dbname": "EXPENSE_DB_DBNAME",
+          "host": "EXPENSE_DB_HOST",
+          "password": "EXPENSE_DB_PASSWORD",
+          "port": "EXPENSE_DB_PORT",
+          "user": "EXPENSE_DB_USER"
+        }
+      }
     },
     {
       "kind": "platform-resource",
       "name": "thunder-auth",
+      "description": "Validates the bearer token on every request; the gateway injects X-User-Id/X-User-Name/X-User-Groups from it.",
       "resourceType": "thunder-app",
-      "description": "Validates the bearer token on every request; the gateway injects X-User-Id/X-User-Name/X-User-Groups from it."
+      "wiring": {
+        "ref": "employees-submit-8ebd4e77",
+        "envBindings": {
+          "client_id": "THUNDER_AUTH_CLIENT_ID",
+          "issuer": "THUNDER_AUTH_ISSUER",
+          "jwks_url": "THUNDER_AUTH_JWKS_URL",
+          "scopes": "THUNDER_AUTH_SCOPES"
+        }
+      }
     }
   ],
-  "description": "Owns expense claims and their approval lifecycle: creation, editing of rejected claims, manager approve/reject, and finance export to a payroll CSV. Also owns the minimal employee/manager directory needed to route a claim to its submitter's manager. The optional receipt attachment is stored inline as base64 content on the claim record in this service's own database — no separate object storage dependency. Does not send email and does not integrate with a specific payroll vendor API.",
-  "stories": [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  "skillsPinned": ["openapi-conventions", "ballerina", "api-management", "thunder-authentication"]
+  "exposesAPI": {
+    "auth": "end-user-required"
+  },
+  "skillsPinned": [
+    "openapi-conventions",
+    "ballerina",
+    "api-management",
+    "thunder-authentication"
+  ]
 }
