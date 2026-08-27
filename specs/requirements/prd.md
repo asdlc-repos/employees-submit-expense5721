@@ -25,23 +25,23 @@ rejects each one.
 ## User Stories
 
 1. As an Employee, I want to submit an expense claim with an amount, category, date,
- and description, so that I can request reimbursement.
+and description, so that I can request reimbursement.
 2. As an Employee, I want to attach a receipt image to my claim, so that I have proof
- of purchase on record.
+of purchase on record.
 3. As an Employee, I want to see the status of all my claims (pending, approved,
- rejected), so that I know where each one stands.
+rejected), so that I know where each one stands.
 4. As an Employee, I want to edit and resubmit a claim my manager rejected, so that I
- can correct it and get it reconsidered.
+can correct it and get it reconsidered.
 5. As a Manager, I want to see the pending claims submitted by my direct reports, so
- that I can review them.
+that I can review them.
 6. As a Manager, I want to approve or reject a claim, optionally with a comment
- explaining my decision, so that the employee understands the outcome.
+explaining my decision, so that the employee understands the outcome.
 7. As a Finance user, I want to see all approved claims awaiting export, so that I
- can process them.
+can process them.
 8. As a Finance user, I want to export approved claims to payroll, so that employees
- are reimbursed through the normal payroll run.
+are reimbursed through the normal payroll run.
 9. As a Finance user, I want exported claims to be marked as exported, so that the
- same claim is never sent to payroll twice.
+same claim is never sent to payroll twice.
 
 ## Product Decisions
 
@@ -51,11 +51,11 @@ multi-level or amount-based escalation.
 - A rejected claim stays open: the employee edits and resubmits the same claim rather
 than starting a new one.
 - Each claim carries one receipt attachment, stored as an uploaded file; attaching it
-is optional. *assumed*
-- The employee is notified by email when their claim is approved or rejected.
-*assumed*
+is optional.
+- There are no email notifications; employees and managers check claim status in the
+app itself.
 - Claims use a fixed category list (Travel, Meals, Lodging, Supplies, Other) rather
-than free-text categories. *assumed*
+than free-text categories.
 - Claims are single-currency (USD); multi-currency support is not part of this
 product. *assumed*
 - Finance exports approved claims as a downloadable file (CSV) rather than pushing
@@ -73,8 +73,8 @@ named yet. *assumed*
 ## Open Questions
 
 1. Which payroll system, if any, should a future integration target — is a CSV
- export sufficient long-term, or does finance need a direct feed into a specific
- vendor?
+export sufficient long-term, or does finance need a direct feed into a specific
+vendor?
 
 ## Further Notes
 
