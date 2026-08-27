@@ -31,6 +31,12 @@ function initDb() returns error? {
             manager_id VARCHAR(64)
         )
     `);
+    // Added post-launch: tracks each employee's live-resolved role so the
+    // directory can self-heal manager assignment (see auth.bal:reconcileManagerAssignments) —
+    // IF NOT EXISTS makes this safe to re-run against an already-deployed table.
+    _ = check dbClient->execute(`
+        ALTER TABLE employees ADD COLUMN IF NOT EXISTS role VARCHAR(20) NOT NULL DEFAULT 'Employee'
+    `);
     _ = check dbClient->execute(`
         CREATE TABLE IF NOT EXISTS expense_claims (
             id VARCHAR(64) PRIMARY KEY,

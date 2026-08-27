@@ -81,11 +81,14 @@ type ClaimRow record {|
 |};
 
 // Raw row shape returned from employees queries — SQL columns aliased to
-// these exact field names (see auth.bal).
+// these exact field names (see auth.bal). `role` is internal bookkeeping
+// (drives manager-assignment reconciliation) and never mapped into the
+// public Employee type.
 type EmployeeRow record {|
     string id;
     string username;
     string name;
     string email;
     string? managerId;
+    string role;
 |};
