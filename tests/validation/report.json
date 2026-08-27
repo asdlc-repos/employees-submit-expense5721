@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "issue": 7,
+  "commit": "7ea5727c7146b97be2cd43cc7b738c1930d3f527",
+  "generatedAt": "2026-08-27T15:37:55.247Z",
+  "playwrightVersion": "1.61.1",
+  "totals": {
+    "e2e": {
+      "total": 23,
+      "pass": 11,
+      "fail": 12,
+      "notRun": 0
+    },
+    "manual": 1,
+    "scenario": 0
+  },
+  "criteria": [
+    {
+      "id": "AC-001-a",
+      "requirementId": "REQ-001",
+      "must": "An employee can create a claim by entering an amount, category, date, and description",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-001-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 1337,
+      "failure": null
+    },
+    {
+      "id": "AC-001-b",
+      "requirementId": "REQ-001",
+      "must": "A newly submitted claim has status pending",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-001-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 94,
+      "failure": null
+    },
+    {
+      "id": "AC-001-c",
+      "requirementId": "REQ-001",
+      "must": "The category must be one of the fixed list (Travel, Meals, Lodging, Supplies, Other)",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-001-c.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 55,
+      "failure": null
+    },
+    {
+      "id": "AC-002-a",
+      "requirementId": "REQ-002",
+      "must": "An employee can attach a receipt image when submitting a claim",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-002-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 868,
+      "failure": null
+    },
+    {
+      "id": "AC-002-b",
+      "requirementId": "REQ-002",
+      "must": "A claim can be submitted without a receipt attachment",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-002-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 25,
+      "failure": null
+    },
+    {
+      "id": "AC-002-c",
+      "requirementId": "REQ-002",
+      "must": "An attached receipt can be viewed later from the claim",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-002-c.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 32,
+      "failure": null
+    },
+    {
+      "id": "AC-003-a",
+      "requirementId": "REQ-003",
+      "must": "An employee sees a list of all claims they submitted",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-003-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 539,
+      "failure": null
+    },
+    {
+      "id": "AC-003-b",
+      "requirementId": "REQ-003",
+      "must": "Each listed claim shows its current status (pending, approved, or rejected)",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-003-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 437,
+      "failure": null
+    },
+    {
+      "id": "AC-003-c",
+      "requirementId": "REQ-003",
+      "must": "An employee cannot see another employee's claims",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-003-c.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 57,
+      "failure": null
+    },
+    {
+      "id": "AC-004-a",
+      "requirementId": "REQ-004",
+      "must": "A rejected claim can be edited by the employee who submitted it",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-004-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 63,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-004-a.spec.ts:11"
+      }
+    },
+    {
+      "id": "AC-004-b",
+      "requirementId": "REQ-004",
+      "must": "Resubmitting an edited claim sets its status back to pending",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-004-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 90,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-004-b.spec.ts:9"
+      }
+    },
+    {
+      "id": "AC-004-c",
+      "requirementId": "REQ-004",
+      "must": "A claim that is not rejected cannot be resubmitted",
+      "method": "manual",
+      "status": "manual",
+      "spec": null,
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 0,
+      "failure": null
+    },
+    {
+      "id": "AC-005-a",
+      "requirementId": "REQ-005",
+      "must": "A manager sees a list of pending claims submitted by their direct reports",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-005-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 102,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false",
+        "location": "AC-005-a.spec.ts:9"
+      }
+    },
+    {
+      "id": "AC-005-b",
+      "requirementId": "REQ-005",
+      "must": "A manager does not see pending claims from employees who are not their direct reports",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-005-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 87,
+      "failure": null
+    },
+    {
+      "id": "AC-006-a",
+      "requirementId": "REQ-006",
+      "must": "A manager can approve a pending claim",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-006-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 66,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-006-a.spec.ts:9"
+      }
+    },
+    {
+      "id": "AC-006-b",
+      "requirementId": "REQ-006",
+      "must": "A manager can reject a pending claim",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-006-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 115,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-006-b.spec.ts:8"
+      }
+    },
+    {
+      "id": "AC-006-c",
+      "requirementId": "REQ-006",
+      "must": "A manager can add a comment when approving or rejecting",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-006-c.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 105,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-006-c.spec.ts:8"
+      }
+    },
+    {
+      "id": "AC-006-d",
+      "requirementId": "REQ-006",
+      "must": "The employee can see the manager's decision and comment on their claim",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-006-d.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 284,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-006-d.spec.ts:9"
+      }
+    },
+    {
+      "id": "AC-007-a",
+      "requirementId": "REQ-007",
+      "must": "A finance user sees a list of approved claims that have not yet been exported",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-007-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 260,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-007-a.spec.ts:9"
+      }
+    },
+    {
+      "id": "AC-007-b",
+      "requirementId": "REQ-007",
+      "must": "A previously exported claim no longer appears in the awaiting-export list",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-007-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 142,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-007-b.spec.ts:9"
+      }
+    },
+    {
+      "id": "AC-008-a",
+      "requirementId": "REQ-008",
+      "must": "A finance user can trigger an export of approved claims",
+      "method": "e2e",
+      "status": "pass",
+      "spec": "tests/e2e/specs/AC-008-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 83,
+      "failure": null
+    },
+    {
+      "id": "AC-008-b",
+      "requirementId": "REQ-008",
+      "must": "The export produces a downloadable file containing the exported claims' data",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-008-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 67,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-008-b.spec.ts:9"
+      }
+    },
+    {
+      "id": "AC-009-a",
+      "requirementId": "REQ-009",
+      "must": "A claim included in an export is marked as exported",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-009-a.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 125,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-009-a.spec.ts:9"
+      }
+    },
+    {
+      "id": "AC-009-b",
+      "requirementId": "REQ-009",
+      "must": "An already-exported claim cannot be exported again",
+      "method": "e2e",
+      "status": "fail",
+      "spec": "tests/e2e/specs/AC-009-b.spec.ts",
+      "healed": false,
+      "healAttempts": 0,
+      "flaky": false,
+      "durationMs": 104,
+      "failure": {
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 403",
+        "location": "AC-009-b.spec.ts:9"
+      }
+    }
+  ]
+}
