@@ -1,0 +1,17 @@
+title Expense Claims
+
+component expense-webapp as "Expense Claims Portal" web-application
+component expense-api as "Expense Claims API" service
+component expense-db as "Expense Claims Database" database
+
+east thunder-auth as "Thunder Auth" identity-server
+south receipt-storage as "Receipt Storage" service
+
+north -> expense-webapp
+
+expense-webapp -> expense-api
+expense-webapp -> thunder-auth
+
+expense-api -> thunder-auth
+expense-api -> expense-db
+expense-api -> receipt-storage

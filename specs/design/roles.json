@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "coldStartRole": "Employee",
+  "publicComponents": [],
+  "roles": [
+    {
+      "name": "Employee",
+      "description": "Submits expense claims, tracks their status, and edits/resubmits their own rejected claims.",
+      "stories": [1, 2, 3, 4],
+      "grantedBy": "first sign-in",
+      "permissions": [
+        { "component": "expense-api", "actions": ["submit claim", "view own claims", "edit own rejected claim"] },
+        { "component": "expense-webapp", "screens": ["My Claims", "New Claim", "Claim Detail"] }
+      ]
+    },
+    {
+      "name": "Manager",
+      "description": "Reviews and decides on expense claims submitted by their direct reports.",
+      "stories": [5, 6],
+      "grantedBy": "Administrators",
+      "permissions": [
+        { "component": "expense-api", "actions": ["view direct reports' claims", "approve claim", "reject claim"] },
+        { "component": "expense-webapp", "screens": ["Review Queue", "Claim Review Detail"] }
+      ]
+    },
+    {
+      "name": "Finance",
+      "description": "Reviews approved claims and exports them to payroll.",
+      "stories": [7, 8, 9],
+      "grantedBy": "Administrators",
+      "permissions": [
+        { "component": "expense-api", "actions": ["view approved claims", "export claims to payroll"] },
+        { "component": "expense-webapp", "screens": ["Export Queue"] }
+      ]
+    }
+  ],
+  "testUsers": [
+    { "username": "test-employee", "role": "Employee" },
+    { "username": "test-manager", "role": "Manager" },
+    { "username": "test-finance", "role": "Finance" }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "expense-webapp",
+  "type": "web-application",
+  "version": "0.1.0",
+  "language": "TypeScript",
+  "buildpack": "docker",
+  "appPath": "expense-webapp",
+  "entrypoint": "deployment/web-application",
+  "exposure": "internet",
+  "dependencies": [
+    {
+      "kind": "component",
+      "name": "expense-api",
+      "description": "Calls the Expense Claims API for all claim data, approvals, rejections, receipt URLs, and payroll export."
+    },
+    {
+      "kind": "platform-resource",
+      "name": "thunder-auth",
+      "resourceType": "thunder-app",
+      "description": "Signs the user in via OIDC + PKCE in the browser and attaches the resulting bearer token to API calls."
+    }
+  ],
+  "description": "The single web surface for employees, managers, and finance: submitting and tracking claims, reviewing and deciding on direct reports' claims, and exporting approved claims to payroll. Renders a distinct set of screens per signed-in role. Holds no business logic or credentials of its own — all data and decisions come from expense-api.",
+  "stories": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+  "skillsPinned": ["wireframes", "react-webapp", "astryx-design-system", "thunder-authentication"]
+}
