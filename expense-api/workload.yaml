@@ -1,0 +1,29 @@
+apiVersion: openchoreo.dev/v1alpha1
+metadata:
+  name: expense-api
+
+endpoints:
+  - name: http
+    type: HTTP
+    port: 9090
+    basePath: /
+    visibility:
+      - project
+      - internal
+      - external
+
+dependencies:
+  resources:
+    - ref: employees-submit-d21d2a05
+      envBindings:
+        dbname: EXPENSE_DB_DBNAME
+        host: EXPENSE_DB_HOST
+        password: EXPENSE_DB_PASSWORD
+        port: EXPENSE_DB_PORT
+        user: EXPENSE_DB_USER
+    - ref: employees-submit-8ebd4e77
+      envBindings:
+        client_id: THUNDER_AUTH_CLIENT_ID
+        issuer: THUNDER_AUTH_ISSUER
+        jwks_url: THUNDER_AUTH_JWKS_URL
+        scopes: THUNDER_AUTH_SCOPES
