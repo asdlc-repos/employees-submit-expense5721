@@ -1,0 +1,9 @@
+# expense-api (Ballerina)
+expense-api/target/
+expense-api/*.jar
+expense-api/Config.toml
+
+# expense-webapp (React/Vite)
+expense-webapp/node_modules/
+expense-webapp/dist/
+expense-webapp/*.local
