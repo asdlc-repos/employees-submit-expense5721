@@ -37,3 +37,4 @@ caller; there is no unauthenticated surface.
 way to promote a signed-in Employee to either role.
 - A rejected claim reopens for its own submitter only; a manager's decision
 never reassigns ownership of a claim.
+
